@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: its-violation-service-deployment
+  labels:
+    app: its
+    module: violation-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: its
+      module: violation-service
+  template:
+    metadata:
+      labels:
+        app: its
+        module: violation-service
+    spec:
+      containers:
+        - name: violation-service-container
+          image: 10.60.156.72/its/its-violation-service:__SERVICE_VERSION__
+          ports:
+            - containerPort: 9715
+              protocol: TCP
+          env:
+            - name: EUREKA_SERVER
+              value: "http://10.60.158.3:9710/eureka/"
+            - name: SHOW_SQL
+              value: "false"
+            - name: SERVER_MODE
+              value: "staging"
+      imagePullSecrets:
+        - name: harbor2

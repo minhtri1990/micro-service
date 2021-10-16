@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: its-auth-service-deployment
+  labels:
+    app: its
+    module: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: its
+      module: auth-service
+  template:
+    metadata:
+      labels:
+        app: its
+        module: auth-service
+    spec:
+      containers:
+      - name: auth-service-container
+        image: 10.60.156.72/its/its-auth-service:__SERVICE_VERSION__
+        ports:
+          - containerPort: 9712
+            protocol: TCP
+        envFrom:
+          - configMapRef:
+              name: its-config-map
+      imagePullSecrets:
+      - name: harbor2

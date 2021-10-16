@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: its-gateway
+  labels:
+    app: its
+    module: its-gateway
+spec:
+  ports:
+  - name: its-gateway-port
+    protocol: TCP
+    port: 9711
+    nodePort: 9711
+  selector:
+    app: its
+    module: its-gateway
+  type: NodePort

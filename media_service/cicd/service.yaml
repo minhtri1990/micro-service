@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: its-media-service
+  labels:
+    app: its
+    module: media-service
+spec:
+  ports:
+  - name: media-service-port
+    protocol: TCP
+    port: 9716
+    nodePort: 9716
+  selector:
+    app: its
+    module: media-service
+  type: NodePort

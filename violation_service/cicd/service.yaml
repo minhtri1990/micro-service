@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: its-violation-service
+  labels:
+    app: its
+    module: violation-service
+spec:
+  ports:
+  - name: violation-service-port
+    protocol: TCP
+    port: 9715
+    nodePort: 9715
+  selector:
+    app: its
+    module: violation-service
+  type: NodePort

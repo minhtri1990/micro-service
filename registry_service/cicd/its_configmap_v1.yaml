@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: its-config-map-v1
+data:
+  DATABASE_URL: jdbc:mysql://10.60.158.90:8000/its_v1?useSSL=false
+  DATABASE_USER: its
+  DATABASE_PASS: Its@2021
+  EUREKA_SERVER: http://10.106.200.19:9710/eureka/
+
+  EMAIL_SERVER_URL: http://10.60.158.3:9002/
+
+  IS_DEV_MODE: "true"
+  SCP_SERVER: http://10.60.158.89:9000
+
+  SHOW_SQL: "false"
+  SERVER_MODE: dev
+  WARNING_DAILY_REPORT_APIKEY: dsad4s5ad5432iohaoADSDHuisssdSS6as4ds6adadadsd
+  SCP_APIKEY: ajdhjkFAe34AR3caosjojeCAFAi53546DAopvkV
+  MAX_TIMES: "2"
+  EMAIL_SERVER: http://10.240.192.62:9002

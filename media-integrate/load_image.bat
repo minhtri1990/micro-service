@@ -1,0 +1,1 @@
+docker load < parking-media-integrate-0.2.tar

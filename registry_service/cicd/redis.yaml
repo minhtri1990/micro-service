@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: its-redis-deployment
+  labels:
+    app: its
+    module: its-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: its
+      module: its-redis
+  template:
+    metadata:
+      labels:
+        app: its
+        module: its-redis
+    spec:
+      containers:
+      - name: its-redis-container
+        image: 10.60.156.72/its/redis:v1
+        ports:
+          - containerPort: 6379
+            protocol: TCP
+        command:
+          - redis-server
+          - "/redis-master/redis.conf"
+        env:
+        - name: MASTER
+          value: "true"
+        resources:
+          limits:
+            cpu: "0.1"
+        volumeMounts:
+        - mountPath: /redis-master-data
+          name: data
+        - mountPath: /redis-master
+          name: config
+      imagePullSecrets:
+      - name: harbor2
+      volumes:
+      - name: data
+        emptyDir: {}
+      - name: config
+        configMap:
+          name: its-config-map
+          items:
+          - key: redis-config
+            path: redis.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: its-redis
+  labels:
+    app: its
+    module: its-redis
+spec:
+  ports:
+  - name: its-redis-port
+    protocol: TCP
+    port: 6379
+    nodePort: 8773
+  selector:
+    app: its
+    module: its-redis
+  type: NodePort

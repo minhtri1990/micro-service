@@ -1,0 +1,23 @@
+<settings>
+  <servers>
+    <server>
+      <id>maven-snapshots</id>
+      <username>${env.NEXUS_USERNAME}</username>
+      <password>${env.NEXUS_PASSS}</password>
+    </server>
+    <server>
+      <id>maven-releases</id>
+      <username>${env.NEXUS_USERNAME}</username>
+      <password>${env.NEXUS_PASSS}</password>
+    </server>
+  </servers>
+  <mirrors>
+	<mirror>
+       <id>viettel-maven-repository</id>
+        <mirrorOf>*</mirrorOf>
+        <name>Viettel Maven Repository</name>
+        <url>http://10.60.108.23:9001/repository/maven-public/</url>
+    </mirror>
+  </mirrors>
+
+</settings>

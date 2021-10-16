@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: its-media-service-deployment
+  labels:
+    app: its
+    module: media-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: its
+      module: media-service
+  template:
+    metadata:
+      labels:
+        app: its
+        module: media-service
+    spec:
+      volumes:
+        - name: its-media-volume
+          persistentVolumeClaim:
+            claimName: its-pvc
+      containers:
+      - name: media-service-container
+        image: 10.60.156.72/its/its-media-service:__SERVICE_VERSION__
+        ports:
+          - containerPort: 9716
+            protocol: TCP
+        envFrom:
+          - configMapRef:
+              name: its-config-map
+        volumeMounts:
+          - mountPath: /data
+            name: its-media-volume
+      imagePullSecrets:
+      - name: harbor2

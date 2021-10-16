@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: its-gateway-deployment
+  labels:
+    app: its
+    module: its-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: its
+      module: its-gateway
+  template:
+    metadata:
+      labels:
+        app: its
+        module: its-gateway
+    spec:
+      containers:
+      - name: its-gateway-container
+        image: 10.60.156.72/its/its-gateway:__SERVICE_VERSION__
+        ports:
+          - containerPort: 9711
+            protocol: TCP
+        envFrom:
+          - configMapRef:
+              name: its-config-map
+      imagePullSecrets:
+      - name: harbor2

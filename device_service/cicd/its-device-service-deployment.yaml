@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: its-device-service-deployment
+  labels:
+    app: its
+    module: device-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: its
+      module: device-service
+  template:
+    metadata:
+      labels:
+        app: its
+        module: device-service
+    spec:
+      containers:
+      - name: device-service-container
+        image: 10.60.156.72/its/its-device-service:__SERVICE_VERSION__
+        ports:
+          - containerPort: 9714
+            protocol: TCP
+        env:
+          - name: EUREKA_SERVER
+            value: "http://10.60.158.3:9710/eureka/"
+      imagePullSecrets:
+      - name: harbor2

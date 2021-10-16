@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: its-pv
+  annotations:
+    pv.kubernetes.io/provisioned-by: "cluster.local/nfs-client-provisioner"
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: "nfs-client"
+  volumeMode: Filesystem
+  nfs:
+    server: "10.60.155.167"
+    path: "/nfs/kubedata"
+  claimRef:
+    name: its-pvc
+    namespace: its

@@ -1,0 +1,27 @@
+version: "3"
+services:
+  parking-media:
+    container_name : parking-media
+    image: parking-media-integrate:0.1.0
+    ports :
+      - "8182:8080"
+    environment:
+      - MONGO_DATABASE=media
+      - MONGO_ROOT_USERNAME=admin
+      - MONGO_ROOT_PASSWORD=admin
+      - MONGO_HOST=10.240.192.18
+      - MONGO_PORT=8006
+      - SYSTEM_VMS_HOST=https://api.thinghub.vn
+      - SYSTEM_VMS_STORE=https://nvr186.thinghub.vn:8443
+      - PROXY_ENABLE=true
+    volumes:
+      - logs:/logs/
+    networks:
+      - backendwebap
+    restart: always    
+   
+volumes:
+    logs:
+networks:
+  backendwebap:
+            

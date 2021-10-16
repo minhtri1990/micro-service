@@ -1,0 +1,72 @@
+server:
+  port: 9715
+  servlet:
+    context-path: /violation-management
+
+spring:
+  application:
+    name: its-violation-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASS}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: ${SHOW_SQL}
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: Asia/Bangkok
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+    registry-fetch-interval-seconds: 5
+  client:
+    serviceUrl:
+      defaultZone:  ${EUREKA_SERVER}
+
+email:
+  server-url: ${EMAIL_SERVER}
+vms:
+  server-url: ${VMS_SERVER}
+orion:
+  server-url: ${ORION_SERVER}
+
+# ------------------- Local ------------------- 
+DATABASE_URL: jdbc:mysql://10.60.158.90:8000/its?useSSL=false
+DATABASE_USER: its
+DATABASE_PASS: Its@2021
+EUREKA_SERVER: http://localhost:9710/eureka/
+SHOW_SQL: true
+SERVER_MODE: local
+WARNING_DAILY_REPORT_APIKEY: dsad4s5ad5432iohaoADSDHuisssdSS6as4ds6adadadsd
+SCP_APIKEY: zUAuXNaqXx04SotafD2VzGOYCfY84gKr
+MAX_TIMES: 5
+ORION_SERVER: http://10.60.156.75:9027
+EMAIL_SERVER: http://10.240.192.62:9002
+VMS_SERVER: http://10.60.155.31:9026
+DAILY_SENDING_TIME: 17
+
+
+IS_DEV_MODE: "true"
+SCP_SERVER: http://10.60.158.89:8999
+
+IOC_SERVER: http://10.60.158.39:9380/api
+HOST_PROXY: "10.61.11.42"
+PORT_PROXY: 3128
+
+EMAIL_SERVER_URL: http://10.60.158.3:9002/
+EMAIL_BACKUP_URL: http://localhost:9712/auth/captcha
+EMAIL_APIKEY: hduisadgi3#$@hi32o4$@#$@#$jirj23iouoji32o432$@#$@#H$23i44234
+FROM_EMAIL: support_idm@viettel.com.vn

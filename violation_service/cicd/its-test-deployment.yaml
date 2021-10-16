@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: its-violation-service-deployment-v1
+  labels:
+    app: its
+    module: violation-service-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: its
+      module: violation-service-v1
+  template:
+    metadata:
+      labels:
+        app: its
+        module: violation-service-v1
+    spec:
+      containers:
+      - name: violation-service-container-v1
+        image: 10.60.156.72/its/its-violation-service:__SERVICE_VERSION__
+        ports:
+          - containerPort: 9735
+            protocol: TCP
+        envFrom:
+          - configMapRef:
+              name: its-config-map-v1
+      imagePullSecrets:
+        - name: harbor2

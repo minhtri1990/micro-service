@@ -1,0 +1,81 @@
+server:
+  port: 9711
+  servlet:
+    context-path: /api
+spring:
+  application:
+    name: its-gateway
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 150MB
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ReadTimeout: 30000
+  ConnectTimeout: 30000
+
+
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 30000
+    socket-timeout-millis: 30000
+
+  routes:
+    its-highway-service:
+      path: /highway-management/**
+      serviceId: its-highway-service
+      stripPrefix: false
+
+    its-device-service:
+      path: /device-management/**
+      serviceId: its-device-service
+      stripPrefix: false
+
+    its-auth-service:
+      path: /auth/**
+      serviceId: its-auth-service
+      stripPrefix: false
+      sensitiveHeaders:
+
+    its-violation-service:
+      path: /violation-management/**
+      serviceId: its-violation-service
+      stripPrefix: false
+      sensitiveHeaders:
+
+
+feign:
+  hystrix:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream, info, health
+
+eureka:
+   instance:
+      prefer-ip-address: true
+      lease-renewal-interval-in-seconds: 5
+      lease-expiration-duration-in-seconds: 15
+#      registry-fetch-interval-seconds: 5
+   client:
+      serviceUrl:
+         defaultZone: ${EUREKA_SERVER}
+
+#----------------------------------------------
+EUREKA_SERVER: http://localhost:9710/eureka/

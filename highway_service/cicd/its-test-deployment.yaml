@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: its-highway-service-deployment
+  labels:
+    app: its
+    module: its-highway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: its
+      module: its-highway-service
+  template:
+    metadata:
+      labels:
+        app: its
+        module: its-highway-service
+    spec:
+      containers:
+        - name: its-highway-service-container
+          image: 10.60.156.72/its/its-highway-service:__SERVICE_VERSION__
+          ports:
+            - containerPort: 9713
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: its-config-map
+      imagePullSecrets:
+        - name: harbor2

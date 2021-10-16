@@ -1,0 +1,9 @@
+
+https://phoenixnap.com/kb/docker-mongodb
+
+sudo mkdir -p /mongodata
+sudo docker run -it -v mongodata:/data/db --name mongodb -d mongo
+
+docker run -it -v mongodata:/data/db -p 27017:27017 --name mongodb -d mongo
+
+sudo docker-compose up -d

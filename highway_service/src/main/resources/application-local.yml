@@ -1,0 +1,39 @@
+server:
+  port: 9713
+  servlet:
+    context-path: /highway-management
+ 
+spring:
+  application:
+    name: its-highway-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASS}
+  jpa:
+    hibernate:
+       ddl-auto: update
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: ${SHOW_SQL}
+    properties:
+       hibernate:
+         jdbc:
+           time_zone: Asia/Bangkok
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+    registry-fetch-interval-seconds: 5
+  client:
+    serviceUrl:
+       defaultZone:  ${EUREKA_SERVER}
+
+# ------------------- Local ------------------- 
+DATABASE_URL: jdbc:mysql://10.60.158.90:8000/its?useSSL=false
+DATABASE_USER: its
+DATABASE_PASS: Its@2021
+EUREKA_SERVER: http://localhost:9710/eureka/
+SHOW_SQL: true

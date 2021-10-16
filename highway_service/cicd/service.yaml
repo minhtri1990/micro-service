@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: its-highway-service
+  labels:
+    app: its
+    module: its-highway-service
+spec:
+  ports:
+  - name: its-highway-service-port
+    protocol: TCP
+    port: 9713
+    nodePort: 9713
+  selector:
+    app: its
+    module: its-highway-service
+  type: NodePort

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: its-media-service-deployment
+  labels:
+    app: its
+    module: media-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: its
+      module: media-service
+  template:
+    metadata:
+      labels:
+        app: its
+        module: media-service
+    spec:
+      containers:
+        - name: media-service-container
+          image: 10.60.156.72/its/its-media-service:__SERVICE_VERSION__
+          ports:
+            - containerPort: 9716
+              protocol: TCP
+          env:
+            - name: EUREKA_SERVER
+              value: "http://10.60.158.4:9710/eureka/"
+      imagePullSecrets:
+        - name: harbor2
+      nodeSelector:
+        notAllowSchedule: node-01

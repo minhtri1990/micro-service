@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: its-registry-service
+  labels:
+    app: its
+    module: registry-service
+spec:
+  ports:
+  - name: registry-service-port
+    protocol: TCP
+    port: 9710
+    nodePort: 9750
+  selector:
+    app: its
+    module: registry-service
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: its-registry-service-cluster-ip
+  labels:
+    app: its
+    module: registry-service
+spec:
+  ports:
+    - name: registry-service-port-cluster-ip
+      protocol: TCP
+      port: 9710
+  selector:
+    app: its
+    module: registry-service

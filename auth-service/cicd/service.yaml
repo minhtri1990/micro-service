@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: its-auth-service
+  labels:
+    app: its
+    module: auth-service
+spec:
+  ports:
+  - name: auth-service-port
+    protocol: TCP
+    port: 9712
+    nodePort: 9712
+  selector:
+    app: its
+    module: auth-service
+  type: NodePort

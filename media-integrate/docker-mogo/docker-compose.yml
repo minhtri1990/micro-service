@@ -1,0 +1,26 @@
+version: "3"
+services:
+  mongo:
+    container_name : mongodb
+    image: mongo
+    ports :
+      - "8006:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=media
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      # seeding scripts
+      #- ./mongo-entrypoint:/docker-entrypoint-initdb.d
+      # named volumes
+      - mongodb:/data/db
+      - mongoconfig:/data/configdb
+    networks:
+      - networks_mongo
+    restart: always
+volumes:
+    mongodb:
+    mongoconfig:
+networks:
+  networks_mongo:
+            

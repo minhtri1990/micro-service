@@ -1,0 +1,82 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="scoketClient" content="width=device-width, initial-scale=1">
+
+<title>VMSPlayer-live</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/player-vms-live.js}"></script>
+<script
+	src="chrome-extension://mooikfkahbdckldjjndioackbalphokd/assets/prompt.js"></script>
+</head>
+<body>
+
+	<div class="full_container">
+		<video width="100%" id="cam1" controls="" class="videoCentered" src=""
+			autoplay="">
+		</video>
+	</div>
+
+	<style type="text/css">
+.videoCentered {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+.full_container {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+video::-webkit-media-controls-timeline, video::-webkit-media-controls-time-remaining-display,
+	video::-webkit-media-controls-current-time-display {
+	display: none;
+}
+
+header {
+	text-align: center;
+}
+
+header img {
+	width: 100px;
+	height: 100px;
+}
+</style>
+	<script>
+		$('#btn_play').click(function() {
+			let ws_url = $('#streamURL').val();
+			if (!ws_url) {
+				alert('Url not null!');
+				return;
+			}
+			new VMSPlayer('cam1', {
+				transport : ws_url
+			});
+		})
+	</script>
+
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			/*<![CDATA[*/
+			var camera = /*[[${camera}]]*/null;
+			var resource_url = /*[[${resource}]]*/null;
+			/*]]>*/
+
+			if (!resource_url) {
+				alert('Url not null!');
+				return;
+			}
+			new VMSPlayer('cam1', {
+				transport : resource_url
+			});
+		});
+	</script>
+</body>
+</html>

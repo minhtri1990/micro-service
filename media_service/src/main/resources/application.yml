@@ -1,0 +1,38 @@
+server:
+  port: 9716
+  servlet:
+    context-path: /media-management
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 150MB
+  application:
+    name: its-media-service
+feign:
+  hystrix:
+    enabled: true
+
+file:
+  host: ${MEDIA_NGINX_HOST}
+  storage:
+    imageDir: data/images
+    videoDir: data/videos
+    documentDir: data/documents
+  supportTypes: png, jpg, svg, jpeg
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+    registry-fetch-interval-seconds: 5
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER}
+
+# ------------------- Local -------------------
+EUREKA_SERVER: http://localhost:9710/eureka/
+MEDIA_NGINX_HOST: http://10.60.156.75:9720

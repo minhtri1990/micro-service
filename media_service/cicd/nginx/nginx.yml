@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: its-media-nginx
+spec:
+  selector:
+    matchLabels:
+      app: its-media-nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: its-media-nginx
+    spec:
+      volumes:
+      - name: its-media-volume
+        persistentVolumeClaim:
+          claimName: its-pvc
+      containers:
+      - name: its-media-nginx-container
+        image: 10.60.156.72/its/nginx:1.19.1
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /data
+          name: its-media-volume
+      imagePullSecrets:
+      - name: harbor
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: its-media-nginx
+spec:
+  type: NodePort
+  selector:
+    app: its-media-nginx
+  ports:
+    - protocol: TCP
+      port: 9720
+      targetPort: 80
+      nodePort: 9720

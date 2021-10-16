@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: its-registry-service-deployment
+  labels:
+    app: its
+    module: registry-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: its
+      module: registry-service
+  template:
+    metadata:
+      labels:
+        app: its
+        module: registry-service
+    spec:
+      containers:
+      - name: registry-service-container
+        image: 10.60.156.72/its/its-registry-service:__SERVICE_VERSION__
+        ports:
+          - containerPort: 9710
+            protocol: TCP
+        env:
+          - name: EUREKA_SERVER
+            value: "http://10.60.158.75:9710/eureka/"
+      imagePullSecrets:
+      - name: harbor2

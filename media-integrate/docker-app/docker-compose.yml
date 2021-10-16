@@ -1,0 +1,50 @@
+version: "3"
+services:
+  mongo:
+    container_name : mongodb
+    image: mongo
+    networks:
+      - backend
+    ports :
+      - "8006:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=media
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      # seeding scripts
+      #- ./mongo-entrypoint:/docker-entrypoint-initdb.d
+      # named volumes
+      - mongodb:/data/db
+      - mongoconfig:/data/configdb
+    restart: always
+  parking-media:
+    container_name : parking-media
+    image: parking-media-integrate:0.2.0
+    networks:
+      - backend
+    ports :
+      - "8183:443"
+    environment:
+      - MONGO_DATABASE=media
+      - MONGO_ROOT_USERNAME=admin
+      - MONGO_ROOT_PASSWORD=admin
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - SYSTEM_VMS_HOST=https://api.thinghub.vn
+      - SYSTEM_VMS_STORE=https://cmr.viettelmaps.vn:8443
+      - PROXY_ENABLE=false
+    depends_on :
+      - mongo
+    links:
+      - mongo
+    volumes:
+      - logs:/logs/
+    restart: always   
+volumes:
+    mongodb:
+    mongoconfig:
+    logs:
+networks:
+  backend:
+            
